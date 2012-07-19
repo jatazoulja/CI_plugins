@@ -17,7 +17,7 @@ class My_Form  {
 		$this->CI =& get_instance();
 		$this->CI->load->helper('form');
 		$this->CI->load->library('form_validation');
-		$this->lang->load('filename', 'language');
+		// $this->lang->load('filename', 'language');
 	}
 	
 	public function setConfig(
