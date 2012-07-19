@@ -1,12 +1,19 @@
 <?php
 class My_Form  {
+	const CONFIG_PATH = 'config/';
 	/*
 	 * Initiate Default CI Intance
 	 */
-	const CONFIG_PATH = 'config/';
-	
 	private $CI;
+	/**
+	 * private config
+	 * @var Array
+	 */
 	private $_config;
+	/**
+	 * private config
+	 * @var Array
+	 */
 	private $_loadConfig;
 	
 	/*
@@ -19,7 +26,13 @@ class My_Form  {
 		$this->CI->load->library('form_validation');
 		// $this->lang->load('filename', 'language');
 	}
-	
+	/**
+	 * setConfig()
+	 * initializing and setting the config file and its section
+	 * @param String $config
+	 * @param String/Bolean $section
+	 * @return Object the class function
+	 */
 	public function setConfig(
 		$config = 'form.ini', 
 		$section = false )
@@ -37,6 +50,11 @@ class My_Form  {
 		return $this;
 	}
 	
+	/**
+	 * 
+	 * config Getter;
+	 * @return Array configuration
+	 */
 	public function getConfig() 
 	{
 		if(is_array($this->_config)) {
@@ -44,11 +62,19 @@ class My_Form  {
 		}
 	}
 	
+	/**
+	 * Echo's the form open
+	 * @param Array $arSet
+	 */
 	public function form_open($arSet) 
 	{
 		echo $this->_config;
 	}
 	
+	/**
+	 * format the element to create the html node file.
+	 * @param String $id
+	 */
 	public function getElementId($id) {
 		if(!isset($this->_config['elements'][$id])) {
 			foreach ($this->_config as $config => $val) {
@@ -61,11 +87,18 @@ class My_Form  {
 		}
 		return $this->_getFormElement($set, $id);
 	}
-	
+	/**
+	 * TODO: implemnt with validation lib
+	 * Enter description here ...
+	 */
 	public function isValid() {
-		
+		// open for suggestion but basically this will be set at elements.username.validators
 	}
-	
+	/**
+	 * Process the elements calling the form helper default by codeIgniter
+	 * @param Array $item
+	 * @param String $id
+	 */
 	protected function _getFormElement($item, $id) {
 		if (!isset($item['attributes']['name'])) {
 			$item['attributes']['name'] = $id;
@@ -76,13 +109,18 @@ class My_Form  {
 		} else {
 			return $generateForm();
 		}
+		/**
+		 * TODO: initialize validation here...
+		 */
 	}
 	
 	
 	/**
 	 * 
 	 * @see http://stackoverflow.com/questions/7480833/ini-file-to-multidimensional-array-in-php
-	 * @param string $filename
+	 * @param String $filename
+	 * @param Boolean $parseSection
+	 * @param String/Array $section
 	 * @return Array config
 	 */
     public static function parse(
