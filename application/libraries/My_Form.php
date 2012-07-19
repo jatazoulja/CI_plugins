@@ -16,11 +16,13 @@ class My_Form  {
 	{
 		$this->CI =& get_instance();
 		$this->CI->load->helper('form');
+		$this->CI->load->library('form_validation');
+		$this->lang->load('filename', 'language');
 	}
 	
 	public function setConfig(
 		$config = 'form.ini', 
-		$section = false ) 
+		$section = false )
 	{
 		$parse_section = '';
 		if($section) {
@@ -57,10 +59,17 @@ class My_Form  {
 		} else {
 			$set = $this->_config['elements'][$id];
 		}
-		return $this->_getFormElement($set);
+		return $this->_getFormElement($set, $id);
 	}
 	
-	protected function _getFormElement($item) {
+	public function isValid() {
+		
+	}
+	
+	protected function _getFormElement($item, $id) {
+		if (!isset($item['attributes']['name'])) {
+			$item['attributes']['name'] = $id;
+		} 
 		$generateForm = "form_{$item['type']}";
 		if(isset($item['attributes'])) {
 			return $generateForm($item['attributes']);
